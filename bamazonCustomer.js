@@ -19,7 +19,7 @@ var connection = mysql.createConnection({
   connection.connect(function(err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-    askQuestions();
+    showProducts();
   });
   function askQuestions() {
       inquirer.prompt([
@@ -40,8 +40,18 @@ var connection = mysql.createConnection({
           checkDB();
         });
   }
+  function showProducts() {
+    connection.query("SELECT * FROM products", function (err,res) {
+      if (err) throw err;
+      for (var i=0; i<res.length;i++) {
+        console.log(`Product ID: ${res[i].item_id} | Product Name: ${res[i].product_name} | Selling Price: ${res[i].price}`);
+        console.log("-------------------------------------------------------------------------");
+      }
+      askQuestions();
+    });
+  }
   function checkDB() {
-      console.log("Check Database");
+      console.log("Checking Inventory");
       connection.query("SELECT * FROM products WHERE ?",
       {
           item_id: productID
@@ -49,13 +59,14 @@ var connection = mysql.createConnection({
       function(err,res) {
         if (err) throw err;
         stockQty = res[0].stock_quantity;
-        console.log(stockQty);
+        //console.log(stockQty);
         checkQty();
       });
   }
   function checkQty() {
     if (stockQty < purchaseQty) {
         console.log("Insufficient quantity!");
+        connection.end();
     } else {
         console.log("There is enough left in stock!");
         updateDB();
