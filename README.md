@@ -19,17 +19,17 @@ In this application, a manager has the option to:
 
     1. VIEW PRODUCTS FOR SALE
         When this function is chosen, all products stored in the mySQL database will be shown with their item IDs, names, prices, and inventory quantities. Execution is shown in the picture below.
-        ![Image description](bamazonmanager01.PNG)
+![Image description](bamazonmanager01.PNG)
 
     2. VIEW LOW INVENTORY
         When this function is chosen, all products whose inventories are less than 5 are returned. Execution is show below.
-        ![Image description](bamazonmanager02.PNG)
+![Image description](bamazonmanager02.PNG)
 
     3. ADD TO INVENTORY
         When this function is chosen, the manager is prompted to enter the ID of the product they would like to increase inventory on. They are then prompted to enter the amount they would like to add to the products inventory. If successful, the manager will receive a successful response and the product's inventory will be updated in the mySQL database. Execution is shown below.
-        ![Image description](bamazonmanager03.PNG)
-        ![Image description](bamazonmanager04.PNG)
+![Image description](bamazonmanager03.PNG)
+![Image description](bamazonmanager04.PNG)
 
     4. ADD A NEW PRODUCT
         When this function is chosen, the manager is able to add a new product to the database that does not already exist. The manager is asked for the product name, department, selling price, and inventory quantity. This information is then sent to and stored in the mySQL database along with an automatically generated unique ID. Execution is show below.
-        ![Image description](bamazonmanager05.PNG)
+![Image description](bamazonmanager05.PNG)
