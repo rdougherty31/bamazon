@@ -59,12 +59,13 @@ var connection = mysql.createConnection({
             console.log("---------------------");
         }
     });
+    connection.end();
   }
 
   //view low inventory
   //display prompt to allow manager to add more of any item currently in the store
   function lowInventory() {
-    console.log("low inventory fxn");
+    // console.log("low inventory fxn");
     connection.query("SELECT * FROM products WHERE stock_quantity<5",function(err, res){
         if (err) throw err;
         for (var i=0; i<res.length;i++) {
@@ -75,6 +76,7 @@ var connection = mysql.createConnection({
             console.log("---------------------");
         }
     });
+    connection.end();
   }
 
   //add to inventory
@@ -101,11 +103,11 @@ var connection = mysql.createConnection({
       ]).then(function(answer) {
         productName = answer.product_name;
         inventoryIncrease = parseInt(answer.increaseInventory);
-        console.log(answer);
-        console.log(productName);
-        console.log(inventoryIncrease);
-        console.log(typeof productName);
-        console.log(typeof inventoryIncrease);
+        // console.log(answer);
+        // console.log(productName);
+        // console.log(inventoryIncrease);
+        // console.log(typeof productName);
+        // console.log(typeof inventoryIncrease);
         connection.query(
             "SELECT * FROM products WHERE ?", 
                 {
@@ -114,11 +116,11 @@ var connection = mysql.createConnection({
             , function(error,res) {
             if (error) throw error;
             stock_quantity = parseInt(res[0].stock_quantity);
-            console.log(res);
-            console.log(inventoryIncrease);
-            console.log(res[0].stock_quantity);
-            console.log(stock_quantity);
-            console.log(inventoryIncrease+stock_quantity);
+            // console.log(res);
+            // console.log(inventoryIncrease);
+            // console.log(res[0].stock_quantity);
+            // console.log(stock_quantity);
+            // console.log(inventoryIncrease+stock_quantity);
             connection.query(
                 "UPDATE products SET ? WHERE ?",
                 [
@@ -130,10 +132,12 @@ var connection = mysql.createConnection({
                     }
                 ], function (error,res) {
                     if (error) throw error;
-                    console.log(res);
+                    console.log("Inventory successfully added!");
+                    // console.log(res);
                 }
             );
-        });
+            connection.end();
+          });
       });
   }
 
@@ -192,4 +196,5 @@ var connection = mysql.createConnection({
           }
         );
       });
+      connection.end();
   }
