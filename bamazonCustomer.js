@@ -3,6 +3,7 @@ var mysql = require("mysql");
 var productID;
 var purchaseQty;
 var stockQty;
+var purchaseTotal;
 var connection = mysql.createConnection({
     host: "localhost",
   
@@ -51,7 +52,7 @@ var connection = mysql.createConnection({
     });
   }
   function checkDB() {
-      console.log("Checking Inventory");
+      console.log("Checking Inventory..");
       connection.query("SELECT * FROM products WHERE ?",
       {
           item_id: productID
@@ -59,6 +60,7 @@ var connection = mysql.createConnection({
       function(err,res) {
         if (err) throw err;
         stockQty = res[0].stock_quantity;
+        purchaseTotal = parseInt(res[0].price)*parseInt(purchaseQty);
         //console.log(stockQty);
         checkQty();
       });
@@ -85,7 +87,8 @@ var connection = mysql.createConnection({
         ],
         function(error) {
           if (error) throw err;
-          console.log(`Purchase complete! You purchased ${purchaseQty} of item with ID ${productID}. There are ${stockQty - purchaseQty} left in stock.`);
+
+            console.log(`Purchase complete! You purchased ${purchaseQty} of item with ID ${productID}. There are ${stockQty - purchaseQty} left in stock. The total cost of your purchase is ${purchaseTotal}`);
           connection.end();
         }
       );
